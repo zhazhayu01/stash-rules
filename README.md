@@ -2,6 +2,8 @@
 
 自用、可独立维护的 Stash 分流补充规则，覆盖 OpenAI / ChatGPT / Codex、Claude、Gemini、Grok、DeepSeek 和 X（Twitter）。基础分类使用社区维护的 `GEOSITE`，本仓库只维护补充和例外。配合已有的机场订阅使用，不包含节点、订阅地址或密钥。
 
+Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的补充规则、美国 / 新加坡策略组与 Oasisic 图标。
+
 ## 导入 Stash
 
 1. 保留并启用已有的节点订阅配置，使用规则模式。
