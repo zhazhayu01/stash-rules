@@ -31,7 +31,7 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 - 美国匹配中文名称、国旗、`US` / `USA`、`United States` 和常见城市名称。
 - 新加坡匹配中文名称、国旗、`SG` / `SGP`、`Singapore`、狮城；英文大小写均可。
 - 筛选依据是节点名称，不会检测服务器实际位置。命名不符合这些规则时，请调整覆写中的 `filter`；启用前确认地区组有匹配节点，Stash 会将空组按 `DIRECT` 处理。
-- 图标通过公开 PNG 地址加载，来自 [Qure](https://github.com/Koolson/Qure) 与 [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)。
+- 图标统一使用 [Oasisic-Icons 图标目录](https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/config/surge-icon.json) 中的公开 PNG 地址；Claude 对应 `Anthropic`，Gemini 对应 `GoogleAI`，覆写封面对应 `GeneralAI`。
 
 ## 社区基础分类
 
