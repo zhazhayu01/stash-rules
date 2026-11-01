@@ -1,0 +1,6 @@
+# X（Twitter）网站、接口、图片视频与短链接。
+payload:
+  - DOMAIN-SUFFIX,x.com
+  - DOMAIN-SUFFIX,twitter.com
+  - DOMAIN-SUFFIX,twimg.com
+  - DOMAIN-SUFFIX,t.co

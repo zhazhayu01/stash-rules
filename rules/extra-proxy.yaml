@@ -1,0 +1,4 @@
+# 自定义代理规则，优先于各服务规则；在 RS-额外代理 策略组选择出口。
+# 添加规则时，将 payload: [] 改为 payload:，下一行缩进两个空格填写：
+#   - DOMAIN-SUFFIX,example.com
+payload: []

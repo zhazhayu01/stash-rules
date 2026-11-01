@@ -1,0 +1,9 @@
+# OpenAI / ChatGPT / Codex 核心域名，网页、API、静态资源与用户内容。
+# 公共验证码、支付等依赖由原配置分流，按实际请求补充。
+payload:
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,oaistatic.com
+  - DOMAIN-SUFFIX,oaiusercontent.com
+  - DOMAIN-SUFFIX,oaistatsig.com
+  - DOMAIN-SUFFIX,openaimerge.com

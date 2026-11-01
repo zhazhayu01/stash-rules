@@ -1,0 +1,59 @@
+name: 自用远程分流规则
+desc: OpenAI、Claude、X 与额外规则；请在各 RS 策略组中选择节点。
+author: zhazhayu01
+homepage: https://github.com/zhazhayu01/stash-rules
+
+# 自动引用原配置中的节点和远程代理集，不依赖原策略组名称。
+proxy-groups:
+  - name: RS-OpenAI
+    type: select
+    include-all: true
+  - name: RS-Claude
+    type: select
+    include-all: true
+  - name: RS-X
+    type: select
+    include-all: true
+  - name: RS-额外代理
+    type: select
+    include-all: true
+
+rule-providers:
+  rs-openai:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/openai.yaml
+    path: ./ruleset/rs-openai.yaml
+    interval: 86400
+  rs-claude:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/claude.yaml
+    path: ./ruleset/rs-claude.yaml
+    interval: 86400
+  rs-x:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml
+    path: ./ruleset/rs-x.yaml
+    interval: 86400
+  rs-extra-proxy:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-proxy.yaml
+    path: ./ruleset/rs-extra-proxy.yaml
+    interval: 86400
+  rs-extra-direct:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-direct.yaml
+    path: ./ruleset/rs-extra-direct.yaml
+    interval: 86400
+
+# Stash 覆写默认将规则插到原配置规则之前；自定义规则优先。
+rules:
+  - RULE-SET,rs-extra-direct,DIRECT
+  - RULE-SET,rs-extra-proxy,RS-额外代理
+  - RULE-SET,rs-openai,RS-OpenAI
+  - RULE-SET,rs-claude,RS-Claude
+  - RULE-SET,rs-x,RS-X
