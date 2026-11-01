@@ -1,33 +1,64 @@
 name: 自用 AI 与 X 远程分流规则
-desc: GEOSITE 社区分类配合自定义补充；请在各 RS 策略组中选择节点。
+desc: GEOSITE 配合自定义补充；服务出口仅提供美国和新加坡，DeepSeek 默认直连。
 author: zhazhayu01
 homepage: https://github.com/zhazhayu01/stash-rules
+icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
 
-# 自动引用原配置中的节点和远程代理集，不依赖原策略组名称。
+# 只有地区组从原配置读取节点，并按名称筛选；服务组仅引用这两个地区组。
 proxy-groups:
+  - name: RS-美国
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+    include-all: true
+    filter: '(?i)(美国|美國|美西|美东|美東|洛杉矶|洛杉磯|圣何塞|聖何塞|西雅图|西雅圖|纽约|紐約|🇺🇸|United[ _-]*States|(?:^|[^a-z])USA?(?:[^a-z]|$))'
+  - name: RS-新加坡
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+    include-all: true
+    filter: '(?i)(新加坡|狮城|獅城|🇸🇬|Singapore|(?:^|[^a-z])SGP?(?:[^a-z]|$))'
   - name: RS-OpenAI
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/chatgpt.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
   - name: RS-Claude
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/claude-ai.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
   - name: RS-X
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
   - name: RS-Gemini
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/google-gemini.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
   - name: RS-Grok
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/grok.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
   - name: RS-DeepSeek
     type: select
+    icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/deepseek.png
     proxies:
       - DIRECT
-    include-all: true
+      - RS-美国
+      - RS-新加坡
   - name: RS-额外代理
     type: select
-    include-all: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+    proxies:
+      - RS-美国
+      - RS-新加坡
 
 rule-providers:
   rs-openai:

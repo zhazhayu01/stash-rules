@@ -6,7 +6,7 @@
 
 1. 保留并启用已有的节点订阅配置，使用规则模式。
 2. 在 Stash 的「覆写」中添加下方远程地址，并启用。也可点击[一键安装覆写](https://link.stash.ws/install-override/raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride)。
-3. 在策略组中分别为 `RS-OpenAI`、`RS-Claude`、`RS-Gemini`、`RS-Grok`、`RS-X`、`RS-额外代理` 选择节点。`RS-DeepSeek` 默认选择 `DIRECT`，也可切换为代理。各组会引用原配置中的全部节点和远程代理集，不依赖机场的策略组名称。
+3. 在 `RS-美国`、`RS-新加坡` 中分别选择对应地区节点；然后在各服务策略组中选择美国或新加坡。`RS-DeepSeek` 默认选择 `DIRECT`，也可切换为这两个地区组。所有新增策略组均配置了图标。
 4. 打开相应服务，在 Stash「最近请求」中检查命中的规则和实际出口。
 
 ```text
@@ -16,6 +16,22 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 覆写依赖原配置提供节点；原配置没有节点时，请先添加订阅。本文件不是独立的完整代理配置。
 
 `GEOSITE` 数据不随 Stash 分发，首次使用会从 GitHub 按需加载，请确保原配置能正常访问 GitHub。`GEOSITE` 数据的加载由 Stash 管理，与下面自定义规则集的 24 小时更新间隔无关。
+
+## 地区策略组与图标
+
+| 策略组 | 可选出口 |
+| --- | --- |
+| `RS-美国` | 原订阅中名称匹配美国的节点 |
+| `RS-新加坡` | 原订阅中名称匹配新加坡的节点 |
+| OpenAI、Claude、Gemini、Grok、X、额外代理 | `RS-美国` / `RS-新加坡`，默认美国 |
+| DeepSeek | `DIRECT` / `RS-美国` / `RS-新加坡`，默认直连 |
+
+地区组使用 `include-all` 配合 `filter` 筛选原配置及远程代理集中的节点，服务组仅引用两个地区组，不直接列出全部节点。地区组使用手动选择，方便保持稳定出口。更新前已经保存的策略选择，请在重新加载后检查一次。
+
+- 美国匹配中文名称、国旗、`US` / `USA`、`United States` 和常见城市名称。
+- 新加坡匹配中文名称、国旗、`SG` / `SGP`、`Singapore`、狮城；英文大小写均可。
+- 筛选依据是节点名称，不会检测服务器实际位置。命名不符合这些规则时，请调整覆写中的 `filter`；启用前确认地区组有匹配节点，Stash 会将空组按 `DIRECT` 处理。
+- 图标通过公开 PNG 地址加载，来自 [Qure](https://github.com/Koolson/Qure) 与 [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons)。
 
 ## 社区基础分类
 
