@@ -1,6 +1,3 @@
-# X（Twitter）网站、接口、图片视频与短链接。
-payload:
-  - DOMAIN-SUFFIX,x.com
-  - DOMAIN-SUFFIX,twitter.com
-  - DOMAIN-SUFFIX,twimg.com
-  - DOMAIN-SUFFIX,t.co
+# X（Twitter）服务补充；基础域名由 stash.stoverride 中的 GEOSITE,twitter 覆盖。
+# 当前无补充；确认遗漏后再添加，命中后走 RS-X。
+payload: []

@@ -1,5 +1,5 @@
-name: 自用远程分流规则
-desc: OpenAI、Claude、X 与额外规则；请在各 RS 策略组中选择节点。
+name: 自用 AI 与 X 远程分流规则
+desc: GEOSITE 社区分类配合自定义补充；请在各 RS 策略组中选择节点。
 author: zhazhayu01
 homepage: https://github.com/zhazhayu01/stash-rules
 
@@ -13,6 +13,17 @@ proxy-groups:
     include-all: true
   - name: RS-X
     type: select
+    include-all: true
+  - name: RS-Gemini
+    type: select
+    include-all: true
+  - name: RS-Grok
+    type: select
+    include-all: true
+  - name: RS-DeepSeek
+    type: select
+    proxies:
+      - DIRECT
     include-all: true
   - name: RS-额外代理
     type: select
@@ -37,6 +48,24 @@ rule-providers:
     url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml
     path: ./ruleset/rs-x.yaml
     interval: 86400
+  rs-gemini:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/gemini.yaml
+    path: ./ruleset/rs-gemini.yaml
+    interval: 86400
+  rs-grok:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/grok.yaml
+    path: ./ruleset/rs-grok.yaml
+    interval: 86400
+  rs-deepseek:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/deepseek.yaml
+    path: ./ruleset/rs-deepseek.yaml
+    interval: 86400
   rs-extra-proxy:
     behavior: classical
     format: yaml
@@ -50,10 +79,21 @@ rule-providers:
     path: ./ruleset/rs-extra-direct.yaml
     interval: 86400
 
-# Stash 覆写默认将规则插到原配置规则之前；自定义规则优先。
+# Stash 覆写默认将规则插到原配置规则之前。
+# 先匹配自定义直连、额外代理和服务补充，再匹配社区分类。
 rules:
   - RULE-SET,rs-extra-direct,DIRECT
   - RULE-SET,rs-extra-proxy,RS-额外代理
   - RULE-SET,rs-openai,RS-OpenAI
   - RULE-SET,rs-claude,RS-Claude
   - RULE-SET,rs-x,RS-X
+  - RULE-SET,rs-gemini,RS-Gemini
+  - RULE-SET,rs-grok,RS-Grok
+  - RULE-SET,rs-deepseek,RS-DeepSeek
+  - GEOSITE,openai,RS-OpenAI
+  - GEOSITE,anthropic,RS-Claude
+  - GEOSITE,google-deepmind,RS-Gemini
+  # xai 包含 grok.x.com，需先于包含整个 x.com 的 twitter 分类。
+  - GEOSITE,xai,RS-Grok
+  - GEOSITE,deepseek,RS-DeepSeek
+  - GEOSITE,twitter,RS-X

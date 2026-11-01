@@ -1,9 +1,5 @@
-# OpenAI / ChatGPT / Codex 核心域名，网页、API、静态资源与用户内容。
-# 公共验证码、支付等依赖由原配置分流，按实际请求补充。
+# OpenAI 服务补充；基础域名由 stash.stoverride 中的 GEOSITE,openai 覆盖。
+# 仅维护社区分类暂未覆盖的域名，命中后走 RS-OpenAI。
+# 来源：https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps
 payload:
-  - DOMAIN-SUFFIX,openai.com
-  - DOMAIN-SUFFIX,chatgpt.com
-  - DOMAIN-SUFFIX,oaistatic.com
-  - DOMAIN-SUFFIX,oaiusercontent.com
-  - DOMAIN-SUFFIX,oaistatsig.com
-  - DOMAIN-SUFFIX,openaimerge.com
+  - DOMAIN,cdn.openaimerge.com
