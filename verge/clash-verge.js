@@ -16,7 +16,6 @@ function main(config) {
     ["Gemini", "Google/GoogleAI/GoogleAI.png"],
     ["Grok", "SpaceXAI/xAI/Grok/Grok.png"],
     ["DeepSeek", "AI/DeepSeek/DeepSeek.png"],
-    ["额外代理", "System/Proxy/Proxy.png"],
   ];
   const groups = [
     {
@@ -41,7 +40,8 @@ function main(config) {
   });
 
   const providers = Object.assign({}, config["rule-providers"] || {});
-  ["openai", "claude", "x", "gemini", "grok", "deepseek", "extra-proxy", "extra-direct"].forEach(function (name) {
+  delete providers["rs-extra-proxy"];
+  ["openai", "claude", "x", "gemini", "grok", "deepseek", "extra-direct"].forEach(function (name) {
     providers["rs-" + name] = {
       type: "http", behavior: "classical", format: "yaml",
       url: raw + name + ".yaml", path: "./ruleset/rs-" + name + ".yaml", interval: 86400,
@@ -50,7 +50,6 @@ function main(config) {
 
   const rules = [
     "RULE-SET,rs-extra-direct,DIRECT",
-    "RULE-SET,rs-extra-proxy,RS-额外代理",
     "RULE-SET,rs-openai,RS-OpenAI",
     "RULE-SET,rs-claude,RS-Claude",
     "RULE-SET,rs-x,RS-X",
@@ -67,6 +66,9 @@ function main(config) {
   ];
   const names = new Set(groups.map(function (group) { return group.name; }));
   const ownRules = new Set(rules);
+  // 清理旧版已生成的额外代理组与规则。
+  names.add("RS-额外代理");
+  ownRules.add("RULE-SET,rs-extra-proxy,RS-额外代理");
   config["proxy-groups"] = groups.concat((config["proxy-groups"] || []).filter(function (group) {
     return !names.has(group.name);
   }));

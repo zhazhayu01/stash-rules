@@ -53,12 +53,6 @@ proxy-groups:
       - DIRECT
       - RS-美国
       - RS-新加坡
-  - name: RS-额外代理
-    type: select
-    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Proxy/Proxy.png
-    proxies:
-      - RS-美国
-      - RS-新加坡
 
 rule-providers:
   rs-openai:
@@ -97,12 +91,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/deepseek.yaml
     path: ./ruleset/rs-deepseek.yaml
     interval: 86400
-  rs-extra-proxy:
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-proxy.yaml
-    path: ./ruleset/rs-extra-proxy.yaml
-    interval: 86400
   rs-extra-direct:
     behavior: classical
     format: yaml
@@ -111,10 +99,9 @@ rule-providers:
     interval: 86400
 
 # Stash 覆写默认将规则插到原配置规则之前。
-# 先匹配自定义直连、额外代理和服务补充，再匹配社区分类。
+# 先匹配自定义直连和服务补充，再匹配社区分类。
 rules:
   - RULE-SET,rs-extra-direct,DIRECT
-  - RULE-SET,rs-extra-proxy,RS-额外代理
   - RULE-SET,rs-openai,RS-OpenAI
   - RULE-SET,rs-claude,RS-Claude
   - RULE-SET,rs-x,RS-X

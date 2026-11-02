@@ -26,7 +26,7 @@ assert.deepEqual(result["rule-providers"].original, input["rule-providers"].orig
 assert.deepEqual(result.rules.slice(-2), input.rules);
 assert.deepEqual(run(result), result, "重复应用必须保持一致");
 const groups = result["proxy-groups"].slice(0, -1);
-assert.equal(groups.length, 9);
+assert.equal(groups.length, 8);
 assert.deepEqual(groups.filter(g => g["include-all"]).map(g => g.name), ["RS-美国", "RS-新加坡"]);
 for (const group of groups) {
   assert.match(group.icon, /^https:\/\/raw\.githubusercontent\.com\/Hawaiine\/Oasisic-Icons\//);
@@ -35,7 +35,8 @@ for (const group of groups) {
 }
 const stash = fs.readFileSync(path.join(root, "stash.stoverride"), "utf8");
 const stashRules = [...stash.matchAll(/^  - ((?:RULE-SET|GEOSITE),.+)$/gm)].map(m => m[1].trim());
-assert.deepEqual(result.rules.slice(0, 14), stashRules, "与 Stash 的规则顺序保持一致");
+assert.equal(stashRules.length, 13);
+assert.deepEqual(result.rules.slice(0, 13), stashRules, "与 Stash 的规则顺序保持一致");
 for (const group of groups) {
   assert.ok(stash.includes("name: " + group.name));
   assert.ok(stash.includes(group.icon));
@@ -49,5 +50,11 @@ for (const [name, provider] of Object.entries(result["rule-providers"])) {
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "verge/manifest.json"), "utf8"));
 assert.equal(manifest.sha256, crypto.createHash("sha256").update(code).digest("hex"));
 assert.throws(() => context.main(null));
-assert.equal(run({})["proxy-groups"].length, 9);
-console.log("PASS：原配置保留、重复应用、地区限制、图标、14 条规则、8 份远程补充与发布校验和");
+assert.equal(run({})["proxy-groups"].length, 8);
+const legacy = JSON.parse(JSON.stringify(result));
+legacy["proxy-groups"].push({ name: "RS-额外代理", type: "select", proxies: ["RS-美国", "RS-新加坡"] });
+legacy["rule-providers"]["rs-extra-proxy"] = { type: "http", behavior: "classical", url: "https://example.org/extra-proxy.yaml" };
+legacy.rules.unshift("RULE-SET,rs-extra-proxy,RS-额外代理");
+assert.deepEqual(run(legacy), result, "升级时应清理旧版额外代理组、规则集与规则");
+assert.equal(Object.keys(result["rule-providers"]).length - 1, 7);
+console.log("PASS：原配置保留、重复应用、旧版清理、地区限制、图标、13 条规则、7 份远程补充与发布校验和");

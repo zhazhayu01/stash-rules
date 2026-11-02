@@ -25,7 +25,7 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 | --- | --- |
 | `RS-美国` | 原订阅中名称匹配美国的节点 |
 | `RS-新加坡` | 原订阅中名称匹配新加坡的节点 |
-| OpenAI、Claude、Gemini、Grok、X、额外代理 | `RS-美国` / `RS-新加坡`，默认美国 |
+| OpenAI、Claude、Gemini、Grok、X | `RS-美国` / `RS-新加坡`，默认美国 |
 | DeepSeek | `DIRECT` / `RS-美国` / `RS-新加坡`，默认直连 |
 
 地区组使用 `include-all` 配合 `filter` 筛选原配置及远程代理集中的节点，服务组仅引用两个地区组，不直接列出全部节点。地区组使用手动选择，方便保持稳定出口。更新前已经保存的策略选择，请在重新加载后检查一次。
@@ -60,7 +60,6 @@ Gemini 使用当前的 `google-deepmind` 分类；旧的 `google-gemini` 分类�
 | [gemini.yaml](rules/gemini.yaml) | Gemini 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/gemini.yaml) |
 | [grok.yaml](rules/grok.yaml) | Grok 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/grok.yaml) |
 | [deepseek.yaml](rules/deepseek.yaml) | DeepSeek 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/deepseek.yaml) |
-| [extra-proxy.yaml](rules/extra-proxy.yaml) | 自定义代理规则，初始为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-proxy.yaml) |
 | [extra-direct.yaml](rules/extra-direct.yaml) | 自定义直连规则，初始为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-direct.yaml) |
 
 补充文件使用 `classical` + YAML 格式。它们只包含补充规则，需配合 `stash.stoverride` 中的 `GEOSITE` 使用，单独引用不包含该服务的完整分类。
@@ -69,7 +68,7 @@ Gemini 使用当前的 `google-deepmind` 分类；旧的 `google-gemini` 分类�
 
 直接在 GitHub 打开对应文件，点击编辑并提交到 `main`；本地修改也可正常提交推送。已导入的规则集每 24 小时检查更新，急用时在 Stash 手动更新规则集。修改 `stash.stoverride` 后需要更新远程覆写并重新加载配置。
 
-服务漏分流时，将确认过的域名加到对应服务补充文件，继续使用该服务的出口。其他需要代理的目标加到 `extra-proxy.yaml`；需要强制直连的目标加到 `extra-direct.yaml`。如果社区后来已覆盖该域名，可以删掉重复补充。
+服务漏分流时，将确认过的域名加到对应服务补充文件，继续使用该服务的出口。需要强制直连的目标加到 `extra-direct.yaml`。如果社区后来已覆盖该域名，可以删掉重复补充。
 
 自定义规则示例（将空文件中的 `payload: []` 改为以下形式，替换示例域名）：
 
@@ -81,7 +80,7 @@ payload:
 ```
 
 - `DOMAIN` 只匹配该域名；`DOMAIN-SUFFIX` 匹配域名本身及其子域名。规则内不要写 `https://`、路径或策略组名称。
-- 匹配顺序：额外直连 → 额外代理 → 各服务补充 → GEOSITE 基础分类 → 原配置规则。自定义规则可以覆盖社区分类；同一域名同时加入两个额外规则集时，直连优先。
+- 匹配顺序：额外直连 → 各服务补充 → GEOSITE 基础分类 → 原配置规则。自定义直连规则可以覆盖服务补充与社区分类。
 - 覆写将规则插入原配置前面。若存在其他覆写，请检查合并后的顺序，确保这些规则在兜底 `MATCH` 之前。
 - 社区分类和本仓库都未覆盖的验证码、支付、登录组件及第三方工具请求由原配置继续处理。遇到遗漏，请从「最近请求」确认域名后按需补充，避免把整个公共 CDN 分给某个服务。
 - 规则决定流量出口，节点本身仍需满足相应服务的地区与网络要求。建议为同一服务保持稳定出口。
