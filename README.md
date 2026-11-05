@@ -4,6 +4,8 @@
 
 Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的补充规则、美国 / 新加坡策略组与 Oasisic 图标。
 
+额外接入自建 AI 线路时，使用[私人 AI 线路补充](private-ai/README.md)，真实订阅只填写在本地，主覆写仍可远程更新。
+
 ## 导入 Stash
 
 1. 保留并启用已有的节点订阅配置，使用规则模式。

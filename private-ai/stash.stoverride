@@ -1,0 +1,37 @@
+name: 私人 AI 线路补充
+desc: 配合主覆写使用，排在主覆写下方；海外 AI 默认使用自建线路。
+icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png
+
+# 导入前在本地替换占位符，不要将真实订阅提交到公开仓库。
+proxy-providers:
+  rs-private-ai:
+    url: 'PRIVATE_SUBSCRIPTION_URL'
+    path: ./proxy_providers/rs-private-ai.yaml
+    interval: 3600
+
+proxy-groups:
+  - name: RS-AI自用节点
+    type: select
+    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png
+    use:
+      - rs-private-ai
+  - name: RS-AI出口
+    type: select
+    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png
+    proxies:
+      - RS-AI自用节点
+      - RS-美国
+      - RS-新加坡
+
+# 保留显式直连例外的优先级，再将四个海外 AI 服务交给统一出口。
+# 规则集仍由主覆写定义和更新；DeepSeek 与 X 继续使用主覆写。
+rules:
+  - RULE-SET,rs-extra-direct,DIRECT
+  - RULE-SET,rs-openai,RS-AI出口
+  - RULE-SET,rs-claude,RS-AI出口
+  - RULE-SET,rs-gemini,RS-AI出口
+  - RULE-SET,rs-grok,RS-AI出口
+  - GEOSITE,openai,RS-AI出口
+  - GEOSITE,anthropic,RS-AI出口
+  - GEOSITE,google-deepmind,RS-AI出口
+  - GEOSITE,xai,RS-AI出口
