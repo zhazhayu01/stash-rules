@@ -22,6 +22,7 @@ proxy-groups:
     proxies:
       - RS-美国
       - RS-新加坡
+      - 🔰 选择节点
   - name: RS-Claude
     type: select
     icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/AI/Anthropic/Anthropic.png
