@@ -4,8 +4,6 @@
 
 Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的动态规则集、美国 / 新加坡策略组与 Oasisic 图标。
 
-额外接入自建 AI 线路时，使用[私人 AI 线路补充](private-ai/README.md)，真实订阅只填写在本地，主覆写仍可远程更新。
-
 ## 导入 Stash
 
 1. 保留并启用已有的节点订阅配置，使用规则模式。
@@ -62,7 +60,7 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 | `rs-google` | Google 常规服务日更规则集 | [Hawaiine/mihomo-rules (`Google.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/Google/Google.yaml) |
 | `rs-extra-direct` | 本仓库维护的自定义直连规则，初始为空 | [extra-direct.yaml](rules/extra-direct.yaml) |
 
-所有规则集使用 `classical` + YAML 格式，每 24 小时自动检查更新。`rs-google-ai` 先于 `rs-google` 匹配，既保证主配置下全部归入 `RS-Google`，也方便开启[私人 AI 线路补充](private-ai/README.md)时将 Google AI 单独切到自建 AI 节点。
+所有规则集使用 `classical` + YAML 格式，每 24 小时自动检查更新。`rs-google-ai` 先于 `rs-google` 匹配，统一归入 `RS-Google` 出口。
 
 ## 日常维护
 
