@@ -41,12 +41,6 @@ proxy-groups:
     proxies:
       - RS-美国
       - RS-新加坡
-  - name: RS-Grok
-    type: select
-    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/SpaceXAI/xAI/Grok/Grok.png
-    proxies:
-      - RS-美国
-      - RS-新加坡
 
 rule-providers:
   rs-openai:
@@ -73,12 +67,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/google.yaml
     path: ./ruleset/rs-google.yaml
     interval: 86400
-  rs-grok:
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/grok.yaml
-    path: ./ruleset/rs-grok.yaml
-    interval: 86400
   rs-extra-direct:
     behavior: classical
     format: yaml
@@ -94,11 +82,9 @@ rules:
   - RULE-SET,rs-claude,RS-Claude
   - RULE-SET,rs-x,RS-X
   - RULE-SET,rs-google,RS-Google
-  - RULE-SET,rs-grok,RS-Grok
   - GEOSITE,openai,RS-OpenAI
   - GEOSITE,anthropic,RS-Claude
   - GEOSITE,google-deepmind,RS-Google
   - GEOSITE,google,RS-Google
-  # xai 包含 grok.x.com，需先于包含整个 x.com 的 twitter 分类。
-  - GEOSITE,xai,RS-Grok
+  - GEOSITE,xai,RS-X
   - GEOSITE,twitter,RS-X

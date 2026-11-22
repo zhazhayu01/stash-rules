@@ -1,6 +1,6 @@
 # Stash 远程规则集
 
-自用、可独立维护的 Stash 分流补充规则，覆盖 OpenAI / ChatGPT / Codex、Claude、Google（含 Gemini、Antigravity、Flow 等全部 Google AI 服务）、Grok 和 X（Twitter）。基础分类使用社区维护的 `GEOSITE`，本仓库只维护补充和例外。配合已有的机场订阅使用，不包含节点、订阅地址或密钥。
+自用、可独立维护的 Stash 分流补充规则，覆盖 OpenAI / ChatGPT / Codex、Claude、Google（含 Gemini、Antigravity、Flow 等全部 Google AI 服务）和 X（Twitter / Grok / xAI）。基础分类使用社区维护的 `GEOSITE`，本仓库只维护补充和例外。配合已有的机场订阅使用，不包含节点、订阅地址或密钥。
 
 Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的补充规则、美国 / 新加坡策略组与 Oasisic 图标。
 
@@ -27,7 +27,7 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 | --- | --- |
 | `RS-美国` | 原订阅中名称匹配美国的节点 |
 | `RS-新加坡` | 原订阅中名称匹配新加坡的节点 |
-| OpenAI、Claude、Google、Grok、X | `RS-美国` / `RS-新加坡`，默认美国 |
+| OpenAI、Claude、Google、X | `RS-美国` / `RS-新加坡`，默认美国 |
 
 地区组使用 `include-all` 配合 `filter` 筛选原配置及远程代理集中的节点，服务组仅引用两个地区组，不直接列出全部节点。地区组使用手动选择，方便保持稳定出口。更新前已经保存的策略选择，请在重新加载后检查一次。
 
@@ -44,12 +44,12 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 | Claude / Claude Code | `GEOSITE,anthropic` | `RS-Claude` | [anthropic](https://github.com/v2fly/domain-list-community/blob/master/data/anthropic) |
 | Google AI（Gemini / Antigravity / Flow 等） | `GEOSITE,google-deepmind` | `RS-Google` | [google-deepmind](https://github.com/v2fly/domain-list-community/blob/master/data/google-deepmind) |
 | Google 常规服务 | `GEOSITE,google` | `RS-Google` | [google](https://github.com/v2fly/domain-list-community/blob/master/data/google) |
-| Grok | `GEOSITE,xai` | `RS-Grok` | [xai](https://github.com/v2fly/domain-list-community/blob/master/data/xai) |
+| Grok / xAI | `GEOSITE,xai` | `RS-X` | [xai](https://github.com/v2fly/domain-list-community/blob/master/data/xai) |
 | X / Twitter | `GEOSITE,twitter` | `RS-X` | [twitter](https://github.com/v2fly/domain-list-community/blob/master/data/twitter) |
 
 分类由 v2fly 社区维护，不需要在本仓库重复列出全部域名。分类名称按上表填写，例如 Claude 对应的是 `anthropic`。
 
-`RS-Google` 统一覆盖 Google 常规服务与全部 Google AI 服务（`google-deepmind` 包含 Gemini、AI Studio、NotebookLM、Jules、Antigravity、Flow / Labs 等，并在 `rules/google.yaml` 中兜底补充 Antigravity 与 Flow 域名），确保 Google 账号登录与 AI 出口一致。Grok 的 `xai` 分类先于 `twitter` 匹配，确保 `grok.x.com` 走 Grok 的独立出口。
+`RS-Google` 统一覆盖 Google 常规服务与全部 Google AI 服务（`google-deepmind` 包含 Gemini、AI Studio、NotebookLM、Jules、Antigravity、Flow / Labs 等，并在 `rules/google.yaml` 中兜底补充 Antigravity 与 Flow 域名），确保 Google 账号登录与 AI 出口一致。`RS-X` 统一覆盖 X（Twitter）与 Grok（xAI）。
 
 ## 自定义补充文件
 
@@ -57,9 +57,8 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 | --- | --- | --- |
 | [openai.yaml](rules/openai.yaml) | OpenAI 服务补充，目前为 `cdn.openaimerge.com` | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/openai.yaml) |
 | [claude.yaml](rules/claude.yaml) | Claude 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/claude.yaml) |
-| [x.yaml](rules/x.yaml) | X 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml) |
+| [x.yaml](rules/x.yaml) | X 与 Grok 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml) |
 | [google.yaml](rules/google.yaml) | Google 与 Google AI 补充，含 Antigravity、Flow / Labs 等域名 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/google.yaml) |
-| [grok.yaml](rules/grok.yaml) | Grok 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/grok.yaml) |
 | [extra-direct.yaml](rules/extra-direct.yaml) | 自定义直连规则，初始为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-direct.yaml) |
 
 补充文件使用 `classical` + YAML 格式。它们只包含补充规则，需配合 `stash.stoverride` 中的 `GEOSITE` 使用，单独引用不包含该服务的完整分类。

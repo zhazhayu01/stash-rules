@@ -14,7 +14,6 @@ function main(config) {
     ["Claude", "AI/Anthropic/Anthropic.png"],
     ["X", "SpaceXAI/X/X.png"],
     ["Google", "Google/Google/Google.png"],
-    ["Grok", "SpaceXAI/xAI/Grok/Grok.png"],
   ];
   const groups = [
     {
@@ -41,8 +40,9 @@ function main(config) {
   const providers = Object.assign({}, config["rule-providers"] || {});
   delete providers["rs-extra-proxy"];
   delete providers["rs-gemini"];
+  delete providers["rs-grok"];
   delete providers["rs-deepseek"];
-  ["openai", "claude", "x", "google", "grok", "extra-direct"].forEach(function (name) {
+  ["openai", "claude", "x", "google", "extra-direct"].forEach(function (name) {
     providers["rs-" + name] = {
       type: "http", behavior: "classical", format: "yaml",
       url: raw + name + ".yaml", path: "./ruleset/rs-" + name + ".yaml", interval: 86400,
@@ -55,23 +55,23 @@ function main(config) {
     "RULE-SET,rs-claude,RS-Claude",
     "RULE-SET,rs-x,RS-X",
     "RULE-SET,rs-google,RS-Google",
-    "RULE-SET,rs-grok,RS-Grok",
     "GEOSITE,openai,RS-OpenAI",
     "GEOSITE,anthropic,RS-Claude",
     "GEOSITE,google-deepmind,RS-Google",
     "GEOSITE,google,RS-Google",
-    // Grok 先于 X，避免 grok.x.com 被 twitter 分类先匹配。
-    "GEOSITE,xai,RS-Grok",
+    "GEOSITE,xai,RS-X",
     "GEOSITE,twitter,RS-X",
   ];
   const names = new Set(groups.map(function (group) { return group.name; }));
   const ownRules = new Set(rules);
   // 清理旧版已生成的策略组与规则。
-  ["RS-额外代理", "RS-Gemini", "RS-DeepSeek"].forEach(function (name) { names.add(name); });
+  ["RS-额外代理", "RS-Gemini", "RS-Grok", "RS-DeepSeek"].forEach(function (name) { names.add(name); });
   [
     "RULE-SET,rs-extra-proxy,RS-额外代理",
     "RULE-SET,rs-gemini,RS-Gemini",
     "GEOSITE,google-deepmind,RS-Gemini",
+    "RULE-SET,rs-grok,RS-Grok",
+    "GEOSITE,xai,RS-Grok",
     "RULE-SET,rs-deepseek,RS-DeepSeek",
     "GEOSITE,deepseek,RS-DeepSeek",
   ].forEach(function (rule) { ownRules.add(rule); });

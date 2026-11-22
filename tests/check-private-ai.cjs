@@ -25,7 +25,7 @@ assert.deepEqual(result["proxy-groups"][1].proxies, ["RS-AI自用节点", "RS-�
 assert.equal(result["proxy-groups"][0]["empty-fallback"], "REJECT");
 const stash = fs.readFileSync(path.join(root, "private-ai/stash.stoverride"), "utf8");
 const rules = [...stash.matchAll(/^  - ((?:RULE-SET|GEOSITE),.+)$/gm)].map(m => m[1].trim());
-assert.equal(rules.length, 9);
+assert.equal(rules.length, 8);
 assert.deepEqual(result.rules.slice(0, rules.length), rules, "两种客户端应使用同一优先规则顺序");
 assert.equal(result.rules[0], "RULE-SET,rs-extra-direct,DIRECT");
 assert.ok(result.rules.indexOf("GEOSITE,xai,RS-AI出口") < result.rules.indexOf("GEOSITE,twitter,RS-X"));
