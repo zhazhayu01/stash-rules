@@ -29,7 +29,7 @@ assert.equal(rules.length, 9);
 assert.deepEqual(result.rules.slice(0, rules.length), rules, "两种客户端应使用同一优先规则顺序");
 assert.equal(result.rules[0], "RULE-SET,rs-extra-direct,DIRECT");
 assert.ok(result.rules.indexOf("GEOSITE,xai,RS-AI出口") < result.rules.indexOf("GEOSITE,twitter,RS-X"));
-assert.ok(result.rules.includes("GEOSITE,deepseek,RS-DeepSeek"));
+assert.ok(result.rules.indexOf("GEOSITE,google-deepmind,RS-AI出口") < result.rules.indexOf("GEOSITE,google,RS-Google"));
 assert.equal(result.rules.at(-1), "MATCH,DIRECT");
 assert.throws(() => run({}), /全局适配/);
 const unconfigured = vm.createContext({});

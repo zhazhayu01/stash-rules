@@ -13,9 +13,8 @@ function main(config) {
     ["OpenAI", "AI/OpenAI/OpenAI.png"],
     ["Claude", "AI/Anthropic/Anthropic.png"],
     ["X", "SpaceXAI/X/X.png"],
-    ["Gemini", "Google/GoogleAI/GoogleAI.png"],
+    ["Google", "Google/Google/Google.png"],
     ["Grok", "SpaceXAI/xAI/Grok/Grok.png"],
-    ["DeepSeek", "AI/DeepSeek/DeepSeek.png"],
   ];
   const groups = [
     {
@@ -35,13 +34,15 @@ function main(config) {
   services.forEach(function (service) {
     groups.push({
       name: "RS-" + service[0], type: "select", icon: icons + service[1],
-      proxies: service[0] === "DeepSeek" ? ["DIRECT"].concat(regions) : regions.slice(),
+      proxies: regions.slice(),
     });
   });
 
   const providers = Object.assign({}, config["rule-providers"] || {});
   delete providers["rs-extra-proxy"];
-  ["openai", "claude", "x", "gemini", "grok", "deepseek", "extra-direct"].forEach(function (name) {
+  delete providers["rs-gemini"];
+  delete providers["rs-deepseek"];
+  ["openai", "claude", "x", "google", "grok", "extra-direct"].forEach(function (name) {
     providers["rs-" + name] = {
       type: "http", behavior: "classical", format: "yaml",
       url: raw + name + ".yaml", path: "./ruleset/rs-" + name + ".yaml", interval: 86400,
@@ -53,22 +54,27 @@ function main(config) {
     "RULE-SET,rs-openai,RS-OpenAI",
     "RULE-SET,rs-claude,RS-Claude",
     "RULE-SET,rs-x,RS-X",
-    "RULE-SET,rs-gemini,RS-Gemini",
+    "RULE-SET,rs-google,RS-Google",
     "RULE-SET,rs-grok,RS-Grok",
-    "RULE-SET,rs-deepseek,RS-DeepSeek",
     "GEOSITE,openai,RS-OpenAI",
     "GEOSITE,anthropic,RS-Claude",
-    "GEOSITE,google-deepmind,RS-Gemini",
+    "GEOSITE,google-deepmind,RS-Google",
+    "GEOSITE,google,RS-Google",
     // Grok 先于 X，避免 grok.x.com 被 twitter 分类先匹配。
     "GEOSITE,xai,RS-Grok",
-    "GEOSITE,deepseek,RS-DeepSeek",
     "GEOSITE,twitter,RS-X",
   ];
   const names = new Set(groups.map(function (group) { return group.name; }));
   const ownRules = new Set(rules);
-  // 清理旧版已生成的额外代理组与规则。
-  names.add("RS-额外代理");
-  ownRules.add("RULE-SET,rs-extra-proxy,RS-额外代理");
+  // 清理旧版已生成的策略组与规则。
+  ["RS-额外代理", "RS-Gemini", "RS-DeepSeek"].forEach(function (name) { names.add(name); });
+  [
+    "RULE-SET,rs-extra-proxy,RS-额外代理",
+    "RULE-SET,rs-gemini,RS-Gemini",
+    "GEOSITE,google-deepmind,RS-Gemini",
+    "RULE-SET,rs-deepseek,RS-DeepSeek",
+    "GEOSITE,deepseek,RS-DeepSeek",
+  ].forEach(function (rule) { ownRules.add(rule); });
   config["proxy-groups"] = groups.concat((config["proxy-groups"] || []).filter(function (group) {
     return !names.has(group.name);
   }));

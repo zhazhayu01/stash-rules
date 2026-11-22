@@ -1,5 +1,5 @@
-name: 自用 AI 与 X 远程分流规则
-desc: GEOSITE 配合自定义补充；服务出口仅提供美国和新加坡，DeepSeek 默认直连。
+name: 自用 AI、Google 与 X 远程分流规则
+desc: GEOSITE 配合自定义补充；服务出口仅提供美国和新加坡，Google 统一覆盖常规服务与全部 Google AI。
 author: zhazhayu01
 homepage: https://github.com/zhazhayu01/stash-rules
 icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png
@@ -35,9 +35,9 @@ proxy-groups:
     proxies:
       - RS-美国
       - RS-新加坡
-  - name: RS-Gemini
+  - name: RS-Google
     type: select
-    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Google/GoogleAI/GoogleAI.png
+    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Google/Google/Google.png
     proxies:
       - RS-美国
       - RS-新加坡
@@ -45,13 +45,6 @@ proxy-groups:
     type: select
     icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/SpaceXAI/xAI/Grok/Grok.png
     proxies:
-      - RS-美国
-      - RS-新加坡
-  - name: RS-DeepSeek
-    type: select
-    icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/AI/DeepSeek/DeepSeek.png
-    proxies:
-      - DIRECT
       - RS-美国
       - RS-新加坡
 
@@ -74,23 +67,17 @@ rule-providers:
     url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml
     path: ./ruleset/rs-x.yaml
     interval: 86400
-  rs-gemini:
+  rs-google:
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/gemini.yaml
-    path: ./ruleset/rs-gemini.yaml
+    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/google.yaml
+    path: ./ruleset/rs-google.yaml
     interval: 86400
   rs-grok:
     behavior: classical
     format: yaml
     url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/grok.yaml
     path: ./ruleset/rs-grok.yaml
-    interval: 86400
-  rs-deepseek:
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/deepseek.yaml
-    path: ./ruleset/rs-deepseek.yaml
     interval: 86400
   rs-extra-direct:
     behavior: classical
@@ -106,13 +93,12 @@ rules:
   - RULE-SET,rs-openai,RS-OpenAI
   - RULE-SET,rs-claude,RS-Claude
   - RULE-SET,rs-x,RS-X
-  - RULE-SET,rs-gemini,RS-Gemini
+  - RULE-SET,rs-google,RS-Google
   - RULE-SET,rs-grok,RS-Grok
-  - RULE-SET,rs-deepseek,RS-DeepSeek
   - GEOSITE,openai,RS-OpenAI
   - GEOSITE,anthropic,RS-Claude
-  - GEOSITE,google-deepmind,RS-Gemini
+  - GEOSITE,google-deepmind,RS-Google
+  - GEOSITE,google,RS-Google
   # xai 包含 grok.x.com，需先于包含整个 x.com 的 twitter 分类。
   - GEOSITE,xai,RS-Grok
-  - GEOSITE,deepseek,RS-DeepSeek
   - GEOSITE,twitter,RS-X

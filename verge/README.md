@@ -1,6 +1,6 @@
 # Clash Verge Rev 适配与同步工具
 
-Windows 下使用系统 PowerShell 即可，不安装额外运行时或依赖。适配基于 Clash Verge Rev 2.5.8 自带的 Mihomo 1.19.32；此前已通过隔离内核验证地区筛选与规则加载，本次移除空的额外代理组后保留 6 个 GEOSITE 与 7 个 RULE-SET。仍需在 Verge 中保存扩展后确认实际业务请求命中。
+Windows 下使用系统 PowerShell 即可，不安装额外运行时或依赖。适配基于 Clash Verge Rev 2.5.8 自带的 Mihomo 1.19.32；此前已通过隔离内核验证地区筛选与规则加载，当前提供 6 个 GEOSITE 与 6 个 RULE-SET。仍需在 Verge 中保存扩展后确认实际业务请求命中。
 
 ## 安装与更新
 
@@ -8,9 +8,9 @@ Windows 下使用系统 PowerShell 即可，不安装额外运行时或依赖。
 2. [下载整个仓库 ZIP](https://github.com/zhazhayu01/stash-rules/archive/refs/heads/main.zip)，解压后打开 `verge` 文件夹。
 3. 双击 `更新覆写.cmd`。首次接管默认空白的全局扩展，以后运行同一个工具即可从 GitHub 更新。
 4. 在 Verge 打开「全局扩展脚本」，确认开头有 `stash-rules-verge` 标记，保存一次以重新应用配置。
-5. 在 `RS-美国`、`RS-新加坡` 分别选节点，再为各服务选择地区。DeepSeek 默认直连。
+5. 在 `RS-美国`、`RS-新加坡` 分别选节点，再为各服务选择地区。
 
-脚本新增 8 个策略组、7 份远程补充列表和 6 个 GEOSITE 分类，与 Stash 使用同一套规则顺序和 Oasisic 图标。地区组按节点名筛选美国、新加坡；筛选为空时使用 `REJECT`，请检查节点命名。
+脚本新增 7 个策略组、6 份远程补充列表和 6 个 GEOSITE 分类，与 Stash 使用同一套规则顺序和 Oasisic 图标。地区组按节点名筛选美国、新加坡；筛选为空时使用 `REJECT`，请检查节点命名。
 
 同步工具更新的是**全局扩展脚本文件**，作用于所有订阅。Verge 没有提供本工具可调用的公开重新执行扩展接口，因此“同步成功”表示文件已就位，仍需完成第 4 步；工具不重启应用或更改系统代理。
 

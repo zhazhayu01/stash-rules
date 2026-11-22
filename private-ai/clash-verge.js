@@ -9,7 +9,7 @@ function main(config) {
   const existingProviders = config["rule-providers"] || {};
   if (!["RS-美国", "RS-新加坡"].every(function (name) {
     return existingGroups.some(function (group) { return group.name === name; });
-  }) || !["extra-direct", "openai", "claude", "gemini", "grok"].every(function (name) {
+  }) || !["extra-direct", "openai", "claude", "google", "grok"].every(function (name) {
     return !!existingProviders["rs-" + name];
   })) {
     throw new Error("请先安装并启用本项目的全局适配脚本");
@@ -30,7 +30,7 @@ function main(config) {
     "RULE-SET,rs-extra-direct,DIRECT",
     "RULE-SET,rs-openai,RS-AI出口",
     "RULE-SET,rs-claude,RS-AI出口",
-    "RULE-SET,rs-gemini,RS-AI出口",
+    "RULE-SET,rs-google,RS-AI出口",
     "RULE-SET,rs-grok,RS-AI出口",
     "GEOSITE,openai,RS-AI出口",
     "GEOSITE,anthropic,RS-AI出口",

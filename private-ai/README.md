@@ -1,6 +1,6 @@
 # 私人 AI 线路补充
 
-在原有机场订阅和主覆写之外，额外接入自建线路。OpenAI / ChatGPT / Codex、Claude、Gemini、Grok 统一走 `RS-AI出口`，默认选择 `RS-AI自用节点`；可手动切换美国或新加坡。DeepSeek 继续默认直连，X 沿用原策略。出口组为手动选择，不会自动换 IP。
+在原有机场订阅和主覆写之外，额外接入自建线路。OpenAI / ChatGPT / Codex、Claude、Google AI（Gemini / Antigravity / Flow 等）、Grok 统一走 `RS-AI出口`，默认选择 `RS-AI自用节点`；可手动切换美国或新加坡。Google 常规服务与 X 沿用主覆写策略。出口组为手动选择，不会自动换 IP。
 
 此处公开文件仅为模板，不能直接使用。复制到本地后，将 `PRIVATE_SUBSCRIPTION_URL` 换成自己的 Clash YAML 订阅地址。私人文件可放在本仓库已忽略的 `.private/` 目录，真实地址不要提交到公开仓库。
 
