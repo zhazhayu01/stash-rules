@@ -1,8 +1,8 @@
 # Stash 远程规则集
 
-自用、可独立维护的 Stash 分流补充规则，覆盖 OpenAI / ChatGPT / Codex、Claude、Google（含 Gemini、Antigravity、Flow 等全部 Google AI 服务）和 X（Twitter / Grok / xAI）。基础分类使用社区维护的 `GEOSITE`，本仓库只维护补充和例外。配合已有的机场订阅使用，不包含节点、订阅地址或密钥。
+自用、可独立维护的 Stash 分流规则覆写，覆盖 OpenAI / ChatGPT / Codex、Claude、Google（含 Gemini、Antigravity、Flow 等全部 Google AI 服务）和 X（Twitter / Grok / xAI）。规则集动态绑定 [Hawaiine/mihomo-rules](https://github.com/Hawaiine/mihomo-rules)（每日自动聚合 v2fly、Loyalsoldier 与 blackmatrix7 三大上游），并配合 `GEOSITE` 兜底；本仓库仅维护策略结构与自定义直连例外。配合已有的机场订阅使用，不包含节点、订阅地址或密钥。
 
-Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的补充规则、美国 / 新加坡策略组与 Oasisic 图标。
+Windows 的 Clash Verge Rev 用户可使用 [Verge 适配脚本与同步工具](verge/README.md)，复用相同的动态规则集、美国 / 新加坡策略组与 Oasisic 图标。
 
 额外接入自建 AI 线路时，使用[私人 AI 线路补充](private-ai/README.md)，真实订阅只填写在本地，主覆写仍可远程更新。
 
@@ -51,17 +51,18 @@ https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/stash.stoverride
 
 `RS-Google` 统一覆盖 Google 常规服务与全部 Google AI 服务（`google-deepmind` 包含 Gemini、AI Studio、NotebookLM、Jules、Antigravity、Flow / Labs 等，并在 `rules/google.yaml` 中兜底补充 Antigravity 与 Flow 域名），确保 Google 账号登录与 AI 出口一致。`RS-X` 统一覆盖 X（Twitter）与 Grok（xAI）。
 
-## 自定义补充文件
+## 动态规则集与自定义直连
 
-| 文件 | 用途 | 远程地址 |
+| 规则集 (`rule-providers`) | 用途 | 远程地址 |
 | --- | --- | --- |
-| [openai.yaml](rules/openai.yaml) | OpenAI 服务补充，目前为 `cdn.openaimerge.com` | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/openai.yaml) |
-| [claude.yaml](rules/claude.yaml) | Claude 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/claude.yaml) |
-| [x.yaml](rules/x.yaml) | X 与 Grok 服务补充，当前为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml) |
-| [google.yaml](rules/google.yaml) | Google 与 Google AI 补充，含 Antigravity、Flow / Labs 等域名 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/google.yaml) |
-| [extra-direct.yaml](rules/extra-direct.yaml) | 自定义直连规则，初始为空 | [Raw](https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/extra-direct.yaml) |
+| `rs-openai` | OpenAI / ChatGPT / Codex 日更规则集 | [Hawaiine/mihomo-rules (`OpenAI.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/OpenAI/OpenAI.yaml) |
+| `rs-claude` | Claude / Anthropic 日更规则集 | [Hawaiine/mihomo-rules (`Anthropic.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/Anthropic/Anthropic.yaml) |
+| `rs-x` | X（Twitter）与 Grok（xAI）日更规则集 | [Hawaiine/mihomo-rules (`X.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/X/X.yaml) |
+| `rs-google-ai` | Google AI（Gemini / Antigravity / Flow 等）日更规则集 | [Hawaiine/mihomo-rules (`GoogleAI.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/GoogleAI/GoogleAI.yaml) |
+| `rs-google` | Google 常规服务日更规则集 | [Hawaiine/mihomo-rules (`Google.yaml`)](https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/Google/Google.yaml) |
+| `rs-extra-direct` | 本仓库维护的自定义直连规则，初始为空 | [extra-direct.yaml](rules/extra-direct.yaml) |
 
-补充文件使用 `classical` + YAML 格式。它们只包含补充规则，需配合 `stash.stoverride` 中的 `GEOSITE` 使用，单独引用不包含该服务的完整分类。
+所有规则集使用 `classical` + YAML 格式，每 24 小时自动检查更新。`rs-google-ai` 先于 `rs-google` 匹配，既保证主配置下全部归入 `RS-Google`，也方便开启[私人 AI 线路补充](private-ai/README.md)时将 Google AI 单独切到自建 AI 节点。
 
 ## 日常维护
 

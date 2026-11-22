@@ -35,8 +35,8 @@ for (const group of groups) {
 }
 const stash = fs.readFileSync(path.join(root, "stash.stoverride"), "utf8");
 const stashRules = [...stash.matchAll(/^  - ((?:RULE-SET|GEOSITE),.+)$/gm)].map(m => m[1].trim());
-assert.equal(stashRules.length, 11);
-assert.deepEqual(result.rules.slice(0, 11), stashRules, "与 Stash 的规则顺序保持一致");
+assert.equal(stashRules.length, 12);
+assert.deepEqual(result.rules.slice(0, 12), stashRules, "与 Stash 的规则顺序保持一致");
 for (const group of groups) {
   assert.ok(stash.includes("name: " + group.name));
   assert.ok(stash.includes(group.icon));
@@ -72,5 +72,5 @@ legacy.rules.unshift(
   "GEOSITE,deepseek,RS-DeepSeek",
 );
 assert.deepEqual(run(legacy), result, "升级时应清理旧版额外代理、Gemini、Grok 与 DeepSeek 策略组、规则集与规则");
-assert.equal(Object.keys(result["rule-providers"]).length - 1, 5);
-console.log("PASS：原配置保留、重复应用、旧版清理、地区限制、图标、11 条规则、5 份远程补充与发布校验和");
+assert.equal(Object.keys(result["rule-providers"]).length - 1, 6);
+console.log("PASS：原配置保留、重复应用、旧版清理、地区限制、图标、12 条规则、6 份远程规则集与发布校验和");

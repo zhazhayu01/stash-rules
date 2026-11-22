@@ -1,3 +1,0 @@
-# Claude 服务补充；基础域名由 stash.stoverride 中的 GEOSITE,anthropic 覆盖。
-# 当前无补充；确认遗漏后再添加，命中后走 RS-Claude。
-payload: []

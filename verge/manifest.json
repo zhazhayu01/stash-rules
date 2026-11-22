@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026.11.22.2",
+  "version": "2026.11.22.3",
   "script": "clash-verge.js",
-  "sha256": "d0158f4b5c98604870786e9473b5869f33b1679454b082d5d271b34ff6320a61"
+  "sha256": "9498d52ced78cf896ac31852d55f01a458bf616193f5f199d922ea959186525c"
 }

@@ -1,5 +1,5 @@
 name: 自用 AI、Google 与 X 远程分流规则
-desc: GEOSITE 配合自定义补充；服务出口仅提供美国和新加坡，Google 统一覆盖常规服务与全部 Google AI。
+desc: 动态绑定 Hawaiine/mihomo-rules 日更规则集并配合 GEOSITE 兜底；服务出口仅提供美国和新加坡。
 author: zhazhayu01
 homepage: https://github.com/zhazhayu01/stash-rules
 icon: https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png
@@ -45,25 +45,31 @@ rule-providers:
   rs-openai:
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/openai.yaml
+    url: https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/OpenAI/OpenAI.yaml
     path: ./ruleset/rs-openai.yaml
     interval: 86400
   rs-claude:
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/claude.yaml
+    url: https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/Anthropic/Anthropic.yaml
     path: ./ruleset/rs-claude.yaml
     interval: 86400
   rs-x:
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/x.yaml
+    url: https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/X/X.yaml
     path: ./ruleset/rs-x.yaml
+    interval: 86400
+  rs-google-ai:
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/GoogleAI/GoogleAI.yaml
+    path: ./ruleset/rs-google-ai.yaml
     interval: 86400
   rs-google:
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/google.yaml
+    url: https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/Google/Google.yaml
     path: ./ruleset/rs-google.yaml
     interval: 86400
   rs-extra-direct:
@@ -74,12 +80,13 @@ rule-providers:
     interval: 86400
 
 # Stash 覆写默认将规则插到原配置规则之前。
-# 先匹配自定义直连和服务补充，再匹配社区分类。
+# 先匹配自定义直连与 Hawaiine/mihomo-rules 日更规则集，再匹配 GEOSITE 基础分类。
 rules:
   - RULE-SET,rs-extra-direct,DIRECT
   - RULE-SET,rs-openai,RS-OpenAI
   - RULE-SET,rs-claude,RS-Claude
   - RULE-SET,rs-x,RS-X
+  - RULE-SET,rs-google-ai,RS-Google
   - RULE-SET,rs-google,RS-Google
   - GEOSITE,openai,RS-OpenAI
   - GEOSITE,anthropic,RS-Claude

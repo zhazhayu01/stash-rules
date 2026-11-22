@@ -7,7 +7,8 @@ function main(config) {
   }
 
   const icons = "https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/";
-  const raw = "https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/";
+  const upstream = "https://raw.githubusercontent.com/Hawaiine/mihomo-rules/main/ruleset/";
+  const selfRaw = "https://raw.githubusercontent.com/zhazhayu01/stash-rules/main/rules/";
   const regions = ["RS-美国", "RS-新加坡"];
   const services = [
     ["OpenAI", "AI/OpenAI/OpenAI.png"],
@@ -42,10 +43,17 @@ function main(config) {
   delete providers["rs-gemini"];
   delete providers["rs-grok"];
   delete providers["rs-deepseek"];
-  ["openai", "claude", "x", "google", "extra-direct"].forEach(function (name) {
-    providers["rs-" + name] = {
+  [
+    ["openai", upstream + "OpenAI/OpenAI.yaml"],
+    ["claude", upstream + "Anthropic/Anthropic.yaml"],
+    ["x", upstream + "X/X.yaml"],
+    ["google-ai", upstream + "GoogleAI/GoogleAI.yaml"],
+    ["google", upstream + "Google/Google.yaml"],
+    ["extra-direct", selfRaw + "extra-direct.yaml"],
+  ].forEach(function (entry) {
+    providers["rs-" + entry[0]] = {
       type: "http", behavior: "classical", format: "yaml",
-      url: raw + name + ".yaml", path: "./ruleset/rs-" + name + ".yaml", interval: 86400,
+      url: entry[1], path: "./ruleset/rs-" + entry[0] + ".yaml", interval: 86400,
     };
   });
 
@@ -54,6 +62,7 @@ function main(config) {
     "RULE-SET,rs-openai,RS-OpenAI",
     "RULE-SET,rs-claude,RS-Claude",
     "RULE-SET,rs-x,RS-X",
+    "RULE-SET,rs-google-ai,RS-Google",
     "RULE-SET,rs-google,RS-Google",
     "GEOSITE,openai,RS-OpenAI",
     "GEOSITE,anthropic,RS-Claude",
